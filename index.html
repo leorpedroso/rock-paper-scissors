@@ -7,76 +7,18 @@
     5. Check if game is over
 
 -->
-<head></head>
+<head>
+  <meta charset="UTF-8">
+  <title>Rock Paper Scissors</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
-    <script>
-        let arrayOfChoices = ['rock', 'paper', 'scissors'];
-        //Determine the computer play
-        function computerPlay () {
-            let num = Math.floor(Math.random() * arrayOfChoices.length);
-            return arrayOfChoices[num];
-        }
-
-        function playerSelection () {
-            let choice = prompt('Select your move');
-            return choice;
-        }
-
-        //Determines the result of the round
-        function playRound (playerSelection, computerSelection) {
-            if(playerSelection == 'rock'){
-                if(computerSelection == 'rock') return('D');
-                else if(computerSelection == 'paper') return('L');
-                else return('W');
-            }
-            else if(playerSelection == 'paper'){
-                if(computerSelection == 'paper') return('D');
-                else if(computerSelection == 'scissors') return('L');
-                else return('W');
-            } 
-            else if(playerSelection == 'scissors'){
-                if(computerSelection == 'scissors') return('D');
-                else if(computerSelection == 'rock') return('L');
-                else return('W');
-            } 
-        }
-
-        function printRoundResults (playerSelection, computerSelection) {
-            playerSelection = playerSelection.toLowerCase();
-            computerSelection = computerSelection.toLowerCase();
-
-            let result = playRound(playerSelection, computerSelection);
-            if(result == 'W') {
-                //playerScore++;
-                console.log(`You Win, ${playerSelection} beats ${computerSelection}`);
-            }
-            else if (result == 'L') {
-                //computerScore++;
-                console.log(`You Lose, ${computerSelection} beats ${playerSelection}`);
-            }    
-            else console.log('Draw');
-
-            return result;
-        }
-
-        function determineWinner (playerScore, computerScore) {
-            (playerScore > computerScore) ? console.log(`You Win ${playerScore} - ${computerScore}!`) : (
-            (playerScore < computerScore) ? console.log(`You Lose ${playerScore} - ${computerScore}`) : 
-            `Draw! Score is ${playerScore} - ${computerScore}`
-            )
-
-        }
-
-        function game () {
-            let playerScore = 0, computerScore = 0;
-            let result;
-            for (let i=0; i<5; i++){
-                result = printRoundResults(playerSelection(), computerPlay() );
-                if (result == 'W') playerScore++;
-                else if(result =='L') computerScore++;
-            }
-            determineWinner(playerScore, computerScore);
-        }
-
-    </script>
+  <p>Make Your Choice</p>
+  <div id="buttons">
+    <button type="button" id="rock">Rock</button>
+    <button type="button" id="paper">Paper</button>
+    <button type="button" id="scissors">Scissors</button>
+  </div>
+  <p id="result"></p>
+  <script src="script.js"></script>
 </body>

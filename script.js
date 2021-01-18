@@ -4,41 +4,72 @@ function computerPlay () {
   const num = Math.floor(Math.random() * arrayOfChoices.length);
   return arrayOfChoices[num];
 }
-/*
-function playerPlay () {
-  const choice = prompt('Select your move');
-  return choice;
+
+const endGame = function printEndOfGameMessage(result){
+  const para = document.getElementById('result');
+  let playerScore = document.getElementById('playerScore').textContent;
+  let computerScore = document.getElementById('computerScore').textContent;
+
+  result === 'W' ?  
+    para.textContent = `You Win the Game ${playerScore} - ${computerScore}`
+    : para.textContent = `You Lose the Game ${playerScore} - ${computerScore}`;
+
+  document.getElementById('playerScore').textContent = '0';
+  document.getElementById('computerScore').textContent = '0';
 }
-*/
-//Determines the result of the round
+
+const updateScore = function updatesTheScoreGivenTheResult(result){
+  if (result === 'W'){
+    let score = document.getElementById('playerScore');
+    score.textContent = `${Number(score.textContent) + 1}`;
+    if (score.textContent === '5') endGame(result);
+  }
+  else {
+    let score = document.getElementById('computerScore');
+    score.textContent = `${Number(score.textContent) + 1}`;
+    if (score.textContent === '5') endGame(result);
+  }
+}
+
 function playRound (playerSelection) {
   const computerSelection = computerPlay();
   computerSelection - computerSelection.toLowerCase();
 
   if (playerSelection == 'rock'){
+    printRoundResults('D', playerSelection, computerSelection);
       if (computerSelection == 'rock'){
-        printRoundResults('D', playerSelection, computerSelection);
       } else if (computerSelection == 'paper'){
         printRoundResults('L', playerSelection, computerSelection);
+        updateScore('L');
+      } else{
+        printRoundResults('W', playerSelection, computerSelection);
+        updateScore('W'); 
       }
-      else printRoundResults('W', playerSelection, computerSelection);
-  } 
+    } 
   else if (playerSelection == 'paper'){
+    printRoundResults('D', playerSelection, computerSelection);
     if (computerSelection == 'paper'){
-      printRoundResults('D', playerSelection, computerSelection);
     } else if (computerSelection == 'scissors'){
       printRoundResults('L', playerSelection, computerSelection);
+      updateScore('L');
+    } else{
+      printRoundResults('W', playerSelection, computerSelection);
+      updateScore('W'); 
     }
-    else printRoundResults('W', playerSelection, computerSelection);
   } 
   else if (playerSelection == 'scissors'){
+    printRoundResults('D', playerSelection, computerSelection);
     if (computerSelection == 'scissors'){
-      printRoundResults('D', playerSelection, computerSelection);
     } else if (computerSelection == 'rock'){
       printRoundResults('L', playerSelection, computerSelection);
+      updateScore('L');
+    } else{
+      printRoundResults('W', playerSelection, computerSelection);
+      updateScore('W'); 
     }
-    else printRoundResults('W', playerSelection, computerSelection);
   }
+
+  return 'W';
 }
 
 function printRoundResults (result, playerSelection, computerSelection) {
@@ -50,36 +81,14 @@ function printRoundResults (result, playerSelection, computerSelection) {
     para.textContent = `You Lose, ${computerSelection} beats ${playerSelection}`;
   }
   else para.textContent = 'Draw';
+
+  return result;
 }
 
-/*
-function determineWinner (playerScore, computerScore) {
-  (playerScore > computerScore) ?
-          console.log(`You Win ${playerScore} - ${computerScore}!`) : (
-  (playerScore < computerScore) ? 
-          console.log(`You Lose ${playerScore} - ${computerScore}`) : 
-                  console.log(`Draw! Score is ${playerScore} - ${computerScore}`)
-          )
-
-}
-*/
-/*
-function game () {
-  let playerScore = 0, computerScore = 0;
-  let result;
-
-  while (playerScore !== 5 || computerScore !== 5){
-    result = playRound(playerSelection(), computerPlay());
-    if (result == 'W') playerScore++;
-    else if(result =='L') computerScore++;
-  }
-
-  determineWinner(playerScore, computerScore);
-}
-*/
 const buttons = document.querySelectorAll('button');
 buttons.forEach((button) => {
     return button.addEventListener('click', () => {
-      playRound(button.id);
+      return playRound(button.id);
     });
-});
+  });
+ 
